@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 export default {
   name: "SignUp",
     data(){
@@ -37,12 +37,12 @@ export default {
   methods :{
       signup(e){
      e.preventDefault();
-//      let result = axios.post('http://localhost:5000/api/v1/auth/signup',{
-//         name : this.name,
-//         email : this.email,
-//         password : this.password
-//      });
-//  console.log(result);
+     let result = axios.post('/api/v1/auth/signup',{
+        name : this.name,
+        email : this.email,
+        password : this.password
+     });
+ console.log(result);
     }
   }
 };
