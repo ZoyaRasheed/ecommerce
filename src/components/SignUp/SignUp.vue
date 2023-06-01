@@ -5,44 +5,52 @@
     <div class="container">
       <form @submit="signup" name="myForm" method="post">
         <div class="formDesign" id="name">
-          <label for="">Name : </label
-          ><input placeholder="NAME" v-model="name" type="text" />
+          <label for="">Name:</label>
+          <input placeholder="NAME" v-model="name" type="text" />
         </div>
         <div class="formDesign" id="email">
-          <label for="">Email : </label
-          ><input placeholder="EMAIl" v-model="email" type="email" />
+          <label for="">Email:</label>
+          <input placeholder="EMAIL" v-model="email" type="email" />
         </div>
         <div class="formDesign" id="password">
-          <label for="">Password :</label>
-          <input placeholder="PASSWORD" v-model="password"  type="password" />
+          <label for="">Password:</label>
+          <input placeholder="PASSWORD" v-model="password" type="password" />
         </div>
         <div class="formdesign submit">
-          <button class="button" value="submit">Sign Up</button>
+          <button class="button" type="submit">Sign Up</button>
         </div>
       </form>
     </div>
   </div>
 </template>
+
 <script>
-// import axios from 'axios'
+import axios from 'axios';
+
+
 export default {
   name: "SignUp",
-    data(){
-        return{
-         name : ' ',
-         email : ' ',
-         password : ' ',
-        }
-    },
-  methods :{
-      signup(e){
-     e.preventDefault();
-//      let result = axios.post('http://localhost:5000/api/v1/auth/signup',{
-//         name : this.name,
-//         email : this.email,
-//         password : this.password
-//      });
-//  console.log(result);
+  data() {
+    return {
+      name: '',
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    signup(e) {
+      e.preventDefault();
+      axios.post('api/v1/auth/signup', {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      }).then((response) => {
+        console.log(response.data);
+        // try to use toastify
+      }).catch((error) => {
+        console.error(error);
+        // try to use toastify
+      });
     }
   }
 };

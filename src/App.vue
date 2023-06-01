@@ -10,6 +10,7 @@
 // import HelloWorld from './components/HelloWorld.vue'
 import SignUp from './components/SignUp/SignUp.vue'
 
+
 export default {
   name: 'App',
   components: {
