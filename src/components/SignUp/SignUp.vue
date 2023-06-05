@@ -19,40 +19,44 @@
         <div class="formdesign submit">
           <button class="button" type="submit">Sign Up</button>
         </div>
+        <p class="login">
+          <span>Already have an Account ?</span
+          ><button><router-link to="/login">Login</router-link></button>
+        </p>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
+import axios from "axios";
 
 export default {
   name: "SignUp",
   data() {
     return {
-      name: '',
-      email: '',
-      password: ''
-    }
+      name: "",
+      email: "",
+      password: "",
+    };
   },
   methods: {
     signup(e) {
       e.preventDefault();
-      axios.post('api/v1/auth/signup', {
-        name: this.name,
-        email: this.email,
-        password: this.password
-      }).then((response) => {
-        console.log(response.data);
-        // try to use toastify
-      }).catch((error) => {
-        console.error(error);
-        // try to use toastify
-      });
-    }
-  }
+      axios
+        .post("api/v1/auth/signup", {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          this.$toast.success(`${response.data.user.name} , Thanks for Signing Up!`)
+        })
+        .catch((error) => {
+          this.$toast.error(error);
+        });
+    },
+  },
 };
 </script>
 <style>
@@ -119,9 +123,9 @@ form {
 }
 
 .button {
-  padding: 10px 10px;
+  padding: 10px;
   margin-top: 1rem;
-  width: 30%;
+  width: 20%;
   border-radius: 4px;
   background: #41403c;
   border: none;
@@ -132,5 +136,26 @@ form {
 
 .button:hover {
   opacity: 0.5;
+}
+.login span {
+  margin-top: 2rem;
+  font-size: 20px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+}
+.login button {
+  background-color: #5f776e;
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  width: 20%;
+  border: 2px solid #5f776e;
+  border-radius: 5px;
+}
+
+.login button a {
+  text-decoration: none;
+  color: whitesmoke;
 }
 </style>

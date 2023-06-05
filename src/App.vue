@@ -1,24 +1,9 @@
 <template>
-  <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <div id="app">
-    <SignUp />
-    </div>
-
+  <nav>
+    <router-link to="/signup">Go for Creating Account</router-link>
+  </nav>
+  <router-view />
 </template>
-
-<script>
-// import HelloWorld from './components/HelloWorld.vue'
-import SignUp from './components/SignUp/SignUp.vue'
-
-
-export default {
-  name: 'App',
-  components: {
-    // HelloWorld
-    SignUp
-  }
-}
-</script>
 
 <style>
 #app {
@@ -27,6 +12,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
