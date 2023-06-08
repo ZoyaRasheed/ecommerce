@@ -1,6 +1,8 @@
 <template>
   <nav>
-    <router-link to="/signup">Go for Creating Account</router-link>
+    <!-- <router-link to="/signup">Go for Creating Account</router-link><br><br> -->
+    <!-- <router-link to = "/login">Login</router-link><br><br>
+    <router-link to ="/collection/create">Click To Create Collection</router-link> -->
   </nav>
   <router-view />
 </template>

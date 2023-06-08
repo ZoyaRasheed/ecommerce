@@ -16,6 +16,10 @@
           <label for="">Password:</label>
           <input placeholder="PASSWORD" v-model="password" type="password" />
         </div>
+        <div class="formDesign" id="phNumber">
+          <label for="">Phone-Number :</label>
+          <input placeholder="PHONE NUMBER" v-model="phoneNumber" type="tel" />
+        </div>
         <div class="formdesign submit">
           <button class="button" type="submit">Sign Up</button>
         </div>
@@ -38,6 +42,7 @@ export default {
       name: "",
       email: "",
       password: "",
+      phoneNumber : "",
     };
   },
   methods: {
@@ -48,6 +53,7 @@ export default {
           name: this.name,
           email: this.email,
           password: this.password,
+          phoneNumber: this.phoneNumber,
         })
         .then((response) => {
           this.$toast.success(`${response.data.user.name} , Thanks for Signing Up!`)
