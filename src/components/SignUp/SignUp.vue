@@ -31,6 +31,7 @@
           <span>Already have an Account ?</span
           ><button type="button"><router-link to="/login">Login</router-link></button>
         </p>
+       <p>Forgot password ?</p>
       </form>
     </div>
   </div>
