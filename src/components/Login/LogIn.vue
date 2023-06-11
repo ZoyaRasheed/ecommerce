@@ -16,8 +16,8 @@
             Login
           </button>
         </div>
-        <span style="margin-right: 16px">Don't have an accout ?</span><button style="background-color: #5f776e"
-          class="button">
+        <span style="margin-right: 16px">Don't have an accout ?</span><button type="button"
+          style="background-color: #5f776e" class="button">
           <router-link to="/signup" style="text-decoration: none; color: aliceblue">Sign Up</router-link>
         </button>
       </form>
@@ -37,30 +37,33 @@ export default {
     };
   },
   methods: {
-    login(e) {
+    async login(e) {
       e.preventDefault();
-      axios
-        .post("api/v1/auth/login", {
+      if (!this.email || !this.password) {
+        this.$toast.error("Please enter all fields.");
+        return;
+      }
+
+      try {
+        const response = await axios.post("api/v1/auth/login", {
           email: this.email,
           password: this.password,
-        })
-        .then((response) => {
-          const token = response.data.token; 
-          const expirationDate = new Date();
-           expirationDate.setDate(expirationDate.getDate() + 7);
-           document.cookie = `token=${token}; expires=${expirationDate.toUTCString()}; path=/;`;
-          this.token = token;
-          let result = response.data;
-          if (result.success) {
-            this.$toast.success(
-              `${response.data.user["name"]} , You're successfully Logged In`
-            );
-            this.$router.push('/')
-          }
-        })
-        .catch((error) => {
-          this.$toast.error(error);
         });
+
+        const token = response.data.token;
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 7);
+        document.cookie = `token=${token}; expires=${expirationDate.toUTCString()}; path=/;`;
+
+        this.token = token;
+        const user = response.data.user;
+        if (response.data.success) {
+          this.$toast.success(`${user.name}, You're successfully Logged In`);
+          this.$router.push("/");
+        }
+      } catch (error) {
+        this.$toast.error(error.message);
+      }
     },
   },
 };

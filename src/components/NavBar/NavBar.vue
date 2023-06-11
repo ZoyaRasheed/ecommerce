@@ -25,7 +25,6 @@
     },
      created() {
       this.token =  this.getTokenFromCookie();
-    // console.log(this.getTokenFromCookie())
     },
     methods: {
       getTokenFromCookie() {
@@ -60,4 +59,9 @@
     },
   };
   </script>
+  <style>
+  li{
+    list-style-type: none;
+  }
+</style>
   

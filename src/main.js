@@ -12,4 +12,4 @@ app.use(Toast, { position : 'top-right'});
 app.mount('#app');
 
 
-axios.defaults.baseURL = "https://tlcbackend-production-22a0.up.railway.app/"
+axios.defaults.baseURL = "https://e-commerce-production-76e7.up.railway.app/"

@@ -16,6 +16,10 @@
           <label for="">Password:</label>
           <input placeholder="PASSWORD" v-model="password" type="password" />
         </div>
+        <div class="formDesign" id="password">
+          <label for="">Confirm Password:</label>
+          <input placeholder=" CONFIRM PASSWORD" v-model="cpassword" type="password" />
+        </div>
         <div class="formDesign" id="phNumber">
           <label for="">Phone-Number :</label>
           <input placeholder="PHONE NUMBER" v-model="phoneNumber" type="tel" />
@@ -25,7 +29,7 @@
         </div>
         <p class="login">
           <span>Already have an Account ?</span
-          ><button><router-link to="/login">Login</router-link></button>
+          ><button type="button"><router-link to="/login">Login</router-link></button>
         </p>
       </form>
     </div>
@@ -42,25 +46,36 @@ export default {
       name: "",
       email: "",
       password: "",
-      phoneNumber : "",
+      cpassword :"",
+      phoneNumber: "",
     };
   },
   methods: {
-    signup(e) {
+    async signup(e) {
       e.preventDefault();
-      axios
-        .post("api/v1/auth/signup", {
+      if (!this.name || !this.email || !this.password ||  !this.cpassword || !this.phoneNumber) {
+        this.$toast.error("Please enter all fields.");
+        return;
+      }
+      if(this.password !== this.cpassword){
+        this.$toast.error("Passwords do not match");
+        return;
+      }
+
+      try {
+        const response = await axios.post("api/v1/auth/signup", {
           name: this.name,
           email: this.email,
           password: this.password,
           phoneNumber: this.phoneNumber,
-        })
-        .then((response) => {
-          this.$toast.success(`${response.data.user.name} , Thanks for Signing Up!`)
-        })
-        .catch((error) => {
-          this.$toast.error(error);
         });
+
+        this.$toast.success(
+          `${response.data.user.name}, Thanks for Signing Up!`
+        );
+      } catch (error) {
+        this.$toast.error(error.message);
+      }
     },
   },
 };
@@ -129,7 +144,7 @@ form {
 }
 
 .button {
-  padding: 10px;
+  padding: 8px;
   margin-top: 1rem;
   width: 20%;
   border-radius: 4px;
@@ -154,7 +169,7 @@ form {
   margin-left: 10px;
   font-size: 16px;
   font-weight: bold;
-  padding: 10px;
+  padding: 8px;
   width: 20%;
   border: 2px solid #5f776e;
   border-radius: 5px;
