@@ -18,7 +18,7 @@
         </div>
         <div class="formDesign" id="password">
           <label for="">Confirm Password:</label>
-          <input placeholder=" CONFIRM PASSWORD" v-model="cpassword" type="password" />
+          <input placeholder="CONFIRM PASSWORD" v-model="cpassword" type="password" />
         </div>
         <div class="formDesign" id="phNumber">
           <label for="">Phone-Number :</label>
@@ -28,10 +28,9 @@
           <button class="button" type="submit">Sign Up</button>
         </div>
         <p class="login">
-          <span>Already have an Account ?</span
-          ><button type="button"><router-link to="/login">Login</router-link></button>
+          <span>Already have an Account ?</span>
+          <router-link to="/login"><button type="button">Login</button></router-link>
         </p>
-       <p>Forgot password ?</p>
       </form>
     </div>
   </div>
@@ -54,7 +53,7 @@ export default {
   methods: {
     async signup(e) {
       e.preventDefault();
-      if (!this.name || !this.email || !this.password ||  !this.cpassword || !this.phoneNumber) {
+      if (!this.name || !this.email || !this.password || !this.cpassword || !this.phoneNumber) {
         this.$toast.error("Please enter all fields.");
         return;
       }
@@ -82,12 +81,12 @@ export default {
 };
 </script>
 <style>
-body {
+/* body {
   margin: 20px 30px;
   height: 100vh;
   width: 100%;
   overflow-x: hidden;
-}
+} */
 h1 {
   color: rgb(155, 148, 139);
   margin-bottom: 5px;
@@ -176,7 +175,7 @@ form {
   border-radius: 5px;
 }
 
-.login button a {
+.login button  {
   text-decoration: none;
   color: whitesmoke;
 }
