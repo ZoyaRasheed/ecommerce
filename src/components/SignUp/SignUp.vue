@@ -81,12 +81,6 @@ export default {
 };
 </script>
 <style>
-/* body {
-  margin: 20px 30px;
-  height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-} */
 h1 {
   color: rgb(155, 148, 139);
   margin-bottom: 5px;

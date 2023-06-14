@@ -1,31 +1,34 @@
+
 <template>
   <div class="product-container">
     <div class="product-detail">
       <img src="../../assets/product.png" alt="" />
       <div class="shop-button">
-        <button @click="buyClick">Buy</button>
+        <button @click="buyClick(token)">Buy</button>
         <button @click="addClick">Add</button>
       </div>
     </div>
   </div>
 </template>
 <script>
+import {getTokenFromCookie} from "../../Helpers/HelperFunction"
 export default {
   name: "ProductCards",
   data() {
-    return {};
+    return {
+      token : null,
+    };
+  },
+  created() {
+    this.token = getTokenFromCookie();
   },
   methods: {
-    buyClick() {
-      if (!this.userLoggedIn()) {
+    buyClick(token) {
+      if (!token) {
         this.$router.push("/login");
       } else {
         this.$router.push("/details");
       }
-    },
-
-    userLoggedIn() {
-        console.log('hello')
     },
   },
 };

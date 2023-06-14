@@ -47,7 +47,7 @@ export default {
       e.preventDefault();
       if (!this.email || !this.password) {
         this.$toast.error("Please enter all fields.");
-        // return;
+        return;
       }
 
       try {
