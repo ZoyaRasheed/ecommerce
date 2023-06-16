@@ -38,6 +38,8 @@
 
 <script>
 import axios from "axios";
+import { getTokenFromCookie } from '../../utils/getBrowserCookies';
+
 
 export default {
   name: "SignUp",
@@ -46,9 +48,13 @@ export default {
       name: "",
       email: "",
       password: "",
-      cpassword :"",
+      cpassword: "",
       phoneNumber: "",
+      token : null ,
     };
+  },
+  created() {
+    this.token = getTokenFromCookie();
   },
   methods: {
     async signup(e) {
@@ -57,7 +63,7 @@ export default {
         this.$toast.error("Please enter all fields.");
         return;
       }
-      if(this.password !== this.cpassword){
+      if (this.password !== this.cpassword) {
         this.$toast.error("Passwords do not match");
         return;
       }
@@ -73,8 +79,12 @@ export default {
         this.$toast.success(
           `${response.data.user.name}, Thanks for Signing Up!`
         );
+        if(this.token)
+        {
+          this.$router.push('/login')
+        }
       } catch (error) {
-        this.$toast.error(error.message);
+        this.$toast.error(error.response.data.message);
       }
     },
   },
@@ -86,11 +96,13 @@ h1 {
   margin-bottom: 5px;
   cursor: pointer;
 }
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 form {
   background-color: hsl(54, 26%, 93%);
   margin: 10px 10px;
@@ -98,6 +110,7 @@ form {
   border-radius: 12px;
   width: 400px;
 }
+
 .formDesign {
   margin: 10px 10px;
   font-size: 20px;
@@ -152,8 +165,10 @@ form {
 .button:hover {
   opacity: 0.5;
 }
+.login{
+  padding: 1em;
+}
 .login span {
-  margin-top: 2rem;
   font-size: 20px;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-weight: bold;
@@ -169,8 +184,7 @@ form {
   border-radius: 5px;
 }
 
-.login button  {
+.login button {
   text-decoration: none;
   color: whitesmoke;
-}
-</style>
+}</style>

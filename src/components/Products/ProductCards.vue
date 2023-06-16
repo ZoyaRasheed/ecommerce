@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import {getTokenFromCookie} from "../../Helpers/HelperFunction"
+import {getTokenFromCookie} from "../../utils/getBrowserCookies"
 export default {
   name: "ProductCards",
   data() {

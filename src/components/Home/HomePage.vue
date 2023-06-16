@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// import axios from 'axios'
 import NavBar from "../NavBar/NavBar.vue";
 import ProductCards from "../Products/ProductCards.vue";
 

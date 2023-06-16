@@ -16,7 +16,7 @@
   
   <script>
 import axios from "axios";
-import { getTokenFromCookie } from "../../Helpers/HelperFunction";
+import { getTokenFromCookie } from "../../utils/getBrowserCookies";
 export default {
   name: "NavBar",
   data() {

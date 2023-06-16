@@ -12,7 +12,10 @@
           <input placeholder="PASSWORD" v-model="password" type="password" />
         </div>
         <div class="forgotpwd">
-          <p style="padding: 4px; color: rgb(0 115 150); cursor: pointer" @click="forgotPassword">
+          <p
+            style="padding: 4px; color: rgb(0 115 150); cursor: pointer"
+            @click="forgotPassword"
+          >
             Forgot password ?
           </p>
         </div>
@@ -21,11 +24,20 @@
             Login
           </button>
         </div>
-        <span style="margin-right: 16px">Don't have an account ?</span>
-        <router-link to="/signup" style="text-decoration: none; color: aliceblue"><button type="button"
-            style="background-color: #5f776e" class="button">
+        <span style="margin-right: 16px; font-size: 20px"
+          >Don't have an account ?</span
+        >
+        <router-link
+          to="/signup"
+          style="text-decoration: none; color: aliceblue"
+          ><button
+            type="button"
+            style="background-color: #5f776e"
+            class="button"
+          >
             Sign Up
-          </button></router-link>
+          </button></router-link
+        >
       </form>
     </div>
   </div>
@@ -33,14 +45,18 @@
 
 <script>
 import axios from "axios";
-
+import { getRoleFromCookies } from "../../utils/getRole";
 export default {
   name: "LogIn",
   data() {
     return {
       email: "",
       password: "",
+      role : ""
     };
+  },
+  created() {
+    this.role = getRoleFromCookies();
   },
   methods: {
     async login(e) {
@@ -64,29 +80,34 @@ export default {
         const user = response.data.user;
         if (response.data.success) {
           this.$toast.success(`${user.name}, You're successfully Logged In`);
-          this.$router.push("/");
+          // this.$router.push("/");
         }
       } catch (error) {
-        this.$toast.error(error.message);
+        this.$toast.error(error.response.data.message);
+      }
+      if (this.role == "admin") {
+        this.$router.push("/adminPage");
+      } else {
+        this.$router.push("/");
       }
     },
-
-    // async forgotPassword() {
-    //   if (!this.email) {
-    //     this.$toast.error("Please enter your email");
-    //     return;
-    //   }
-
-    //   try {
-    //     const response = await axios.post("api/v1/auth/password/forgot", {
-    //       email: this.email,
-    //     });
-    //     this.$toast.success(response.data.message);
-    //   } catch (error) {
-    //     this.$toast.error(error.message);
-    //   }
-    // },
   },
+
+  // async forgotPassword() {
+  //   if (!this.email) {
+  //     this.$toast.error("Please enter your email");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await axios.post("api/v1/auth/password/forgot", {
+  //       email: this.email,
+  //     });
+  //     this.$toast.success(response.data.message);
+  //   } catch (error) {
+  //     this.$toast.error(error.message);
+  //   }
+  // },
 };
 </script>
 <style>
