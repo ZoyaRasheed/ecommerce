@@ -3,7 +3,7 @@ import HomePage from '../components/Home/HomePage.vue'
 import SignUp from "../components/SignUp/SignUp.vue";
 import LogIn from "../components/Login/LogIn.vue";
 import ProductDetails from '../components/Products/ProductDetails.vue'
-import AdminPage from '.././views/AdminPage.vue'
+// import AdminPage from '.././views/AdminPage.vue'
 
 const routes = [
   {
@@ -27,11 +27,11 @@ const routes = [
     name: ProductDetails,
     component: ProductDetails,
   },
-  {
-    path :"/adminPage",
-    name : AdminPage,
-    component : AdminPage
-  }
+  // {
+  //   path :"/adminPage",
+  //   name : AdminPage,
+  //   component : AdminPage
+  // }
   
   
 ];

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from "axios";
 import NavBar from "../NavBar/NavBar.vue";
 import ProductCards from "../Products/ProductCards.vue";
 
@@ -23,20 +23,27 @@ export default {
 
   data() {
     return {
-      products: [
-        { id: 1, image: "../../assets/product.png" },
-        { id: 2, image: "../../assets/product.png" },
-        { id: 3, image: "../../assets/product.png" },
-        { id: 4, image: "../../assets/product.png" },
-        { id: 5, image: "../../assets/product.png" },
-        { id: 6, image: "../../assets/product.png" },
-        { id: 7, image: "../../assets/product.png" },
-        { id: 8, image: "../../assets/product.png" },
-      ],
+      products: [],
     };
   },
-
-  methods: {},
+  mounted() {
+    this.getProducts();
+  },
+  methods: {
+    getProducts(){
+      axios.get('/product/').then((response) =>{
+        this.products = response.data.product.map((p) =>({
+          id : p._id,
+          name :p.name ,
+          description : p.description,
+          price : p.price,
+          image : p.photos[0].sucure_url,
+        }))
+      }).catch((error)=>{
+        this.$toast.error(error.response.data.message)
+      })
+    }
+  },
 };
 </script>
 <style>

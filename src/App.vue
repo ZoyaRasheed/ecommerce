@@ -2,7 +2,7 @@
   <nav>
   </nav>
   <router-view />
-  <AdminPage />
+
 </template>
 
 <style>

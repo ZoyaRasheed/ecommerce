@@ -2,6 +2,7 @@
   <div>
     <nav>
       <h1>E-<span>Commerce</span></h1>
+      <input type="text"  class="search-bar" placeholder="Search products ..." v-model="input" @change="search">
       <ul>
         <li v-if="token"><button @click="logout">Logout</button></li>
         <li v-else>
@@ -19,9 +20,12 @@ import axios from "axios";
 import { getTokenFromCookie } from "../../utils/getBrowserCookies";
 export default {
   name: "NavBar",
+  props : ['product'],
   data() {
     return {
       token: null,
+      input : '',
+      products : [],
     };
   },
   created() {
@@ -31,7 +35,7 @@ export default {
     logout(e) {
       e.preventDefault();
       axios
-        .get("api/v1/auth/logout", {
+        .get("/auth/logout", {
           email: "",
           password: "",
         })
@@ -47,6 +51,18 @@ export default {
           this.$toast.error(err);
         });
     },
+    search(){
+     axios.get('/product/search',{
+      data :{
+      name : this.input,   
+      },    
+     }).then((response)=>{
+    //  this.products = response.data.products;
+    console.log(response)
+     }).catch((error)=>{
+     this.$toast.error(error.response.data.message)
+     })
+    }
   },
 };
 </script>
@@ -74,13 +90,21 @@ nav ul li {
 }
 nav button {
   padding: 8px;
-  margin-top: 1rem;
+  margin-top: 0.6rem;
   border-radius: 4px;
   background: #41403c;
   border: none;
   color: #fff;
   font-weight: bold;
   font-size: 1rem;
+}
+.search-bar{
+  background-color: white;
+  padding: 12px;
+  width: 30%;
+  border: none;
+  outline: none;
+  border-radius: 8px;
 }
 </style>
   

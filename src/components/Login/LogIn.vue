@@ -52,7 +52,7 @@ export default {
     return {
       email: "",
       password: "",
-      role : ""
+      role: "admin",
     };
   },
   created() {
@@ -67,7 +67,7 @@ export default {
       }
 
       try {
-        const response = await axios.post("api/v1/auth/login", {
+        const response = await axios.post("/auth/login", {
           email: this.email,
           password: this.password,
         });
@@ -80,16 +80,18 @@ export default {
         const user = response.data.user;
         if (response.data.success) {
           this.$toast.success(`${user.name}, You're successfully Logged In`);
-          // this.$router.push("/");
+          const redirect = this.$route.query.redirect || "/";
+          this.$router.push(redirect);
         }
       } catch (error) {
         this.$toast.error(error.response.data.message);
+        return;
       }
-      if (this.role == "admin") {
-        this.$router.push("/adminPage");
-      } else {
-        this.$router.push("/");
-      }
+      // if (this.role == "admin") {
+      //   this.$router.push("/adminPage");
+      // } else {
+      //   this.$router.push("/");
+      // }
     },
   },
 

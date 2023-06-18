@@ -27,6 +27,7 @@
         <div class="formdesign submit">
           <button class="button" type="submit">Sign Up</button>
         </div>
+        <p  class="admin" style="margin-top: 0.8em;">Do you want to become a seller ?</p>
         <p class="login">
           <span>Already have an Account ?</span>
           <router-link to="/login"><button type="button">Login</button></router-link>
@@ -38,9 +39,7 @@
 
 <script>
 import axios from "axios";
-import { getTokenFromCookie } from '../../utils/getBrowserCookies';
-
-
+// import { getTokenFromCookie } from '../../utils/getBrowserCookies';
 export default {
   name: "SignUp",
   data() {
@@ -50,12 +49,12 @@ export default {
       password: "",
       cpassword: "",
       phoneNumber: "",
-      token : null ,
+      // token : null ,
     };
   },
-  created() {
-    this.token = getTokenFromCookie();
-  },
+  // created() {
+  //   this.token = getTokenFromCookie();
+  // },
   methods: {
     async signup(e) {
       e.preventDefault();
@@ -69,20 +68,17 @@ export default {
       }
 
       try {
-        const response = await axios.post("api/v1/auth/signup", {
+        const response = await axios.post("/auth/signup", {
           name: this.name,
           email: this.email,
           password: this.password,
           phoneNumber: this.phoneNumber,
+          role : "admin",
         });
-
         this.$toast.success(
           `${response.data.user.name}, Thanks for Signing Up!`
         );
-        if(this.token)
-        {
-          this.$router.push('/login')
-        }
+          this.$router.push('/login')  
       } catch (error) {
         this.$toast.error(error.response.data.message);
       }
@@ -151,19 +147,24 @@ form {
 }
 
 .button {
-  padding: 8px;
+  padding: 5px;
   margin-top: 1rem;
   width: 20%;
   border-radius: 4px;
   background: #41403c;
+  color: white !important;
   border: none;
-  color: #fff;
   font-weight: bold;
   font-size: 1rem;
 }
 
 .button:hover {
   opacity: 0.5;
+
+}
+.admin{
+  cursor: pointer;
+  text-decoration: underline;
 }
 .login{
   padding: 1em;
