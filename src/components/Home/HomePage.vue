@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar />
+    <NavBar @select-product="productSelection" @clear-selection="clearProducts" :input="input"/>
     <ProductCards
       v-for="product in products"
       :key="product.id"
@@ -24,13 +24,22 @@ export default {
   data() {
     return {
       products: [],
+      input :"",  
     };
   },
   mounted() {
     this.getProducts();
   },
   methods: {
+    productSelection(product){
+      this.products = [product];
+    },
+    clearProducts(){
+        this.products = [];
+        this.getProducts();
+    },
     getProducts(){
+      if (this.input === '') {
       axios.get('/product/').then((response) =>{
         this.products = response.data.product.map((p) =>({
           id : p._id,
@@ -43,6 +52,7 @@ export default {
         this.$toast.error(error.response.data.message)
       })
     }
+    },
   },
 };
 </script>

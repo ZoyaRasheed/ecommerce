@@ -71,7 +71,6 @@ export default {
           email: this.email,
           password: this.password,
         });
-
         const token = response.data.token;
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 7);
@@ -82,6 +81,7 @@ export default {
           this.$toast.success(`${user.name}, You're successfully Logged In`);
           const redirect = this.$route.query.redirect || "/";
           this.$router.push(redirect);
+
         }
       } catch (error) {
         this.$toast.error(error.response.data.message);
