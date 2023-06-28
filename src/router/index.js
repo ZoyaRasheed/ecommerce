@@ -2,16 +2,14 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from '../components/Home/HomePage.vue'
 import SignUp from "../components/SignUp/SignUp.vue";
 import LogIn from "../components/Login/LogIn.vue";
-import CreateCollection from "@/components/CollectionSys/CreateCollection.vue";
-
-
+import ProductDetails from '../components/Products/ProductDetails.vue'
+// import AdminPage from '.././views/AdminPage.vue'
 
 const routes = [
   {
     path : "/",
     name : HomePage,
     component : HomePage,
-
   },
   {
     path: "/signup",
@@ -24,10 +22,16 @@ const routes = [
     component: LogIn,
   },
   {
-    path: "/collection/create",
-    name: CreateCollection,
-    component: CreateCollection,
+    path: "/details",
+    name: ProductDetails,
+    component: ProductDetails,
   },
+  // {
+  //   path :"/adminPage",
+  //   name : AdminPage,
+  //   component : AdminPage
+  // }
+  
   
 ];
 
