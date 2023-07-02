@@ -12,13 +12,20 @@
       <ul>
         <li>
           <div class="profile-container">
-            <img
+            <!-- <img
               class="profile-img"
               src="../../assets/product.png"
               alt=""
               v-on:click="toggleMenu"
+            /> -->
+            <input
+              type="file"
+              class="profile-img"
+              accept="image/*"
+              ref="profileImageInput"
+              v-on:change="uploadProfileImage"
             />
-            <div class="dropdown-menu" v-show="isMenuOpen">
+            <div class="dropdown-menu" v-if="isMenuOpen">
               <ul>
                 <li>Profile</li>
                 <li>Settings</li>
@@ -30,7 +37,7 @@
                 </li>
               </ul>
             </div>
-            <p>{{userName}}</p>
+            <p>{{ userName }}</p>
           </div>
         </li>
       </ul>
@@ -56,7 +63,7 @@
   <script>
 import axios from "axios";
 import { getTokenFromCookie } from "../../utils/getBrowserCookies";
-import { getNameFromCookies }  from '../../utils/getNameFromCookies';
+// import { getNameFromCookies }  from '../../utils/getNameFromCookies';
 export default {
   name: "NavBar",
   props: ["product"],
@@ -67,21 +74,49 @@ export default {
       products: [],
       searchList: [],
       isMenuOpen: false,
-      userName :null,
+      userName: null,
     };
   },
+ 
   created() {
     this.token = getTokenFromCookie();
-    console.log('calling this')
-    this.userName =getNameFromCookies();
-    console.log(this.username)
-  //   try {
-  //   this.userName = getNameFromCookies();
-  // } catch (error) {
-  //   console.error('Error retrieving user name:', error);
-  // }
+    document.addEventListener("click", this.closeMenus);
+    // console.log('calling this')
+    // this.userName =getNameFromCookies();
+    // console.log(this.username)
+    //   try {
+    //   this.userName = getNameFromCookies();
+    // } catch (error) {
+    //   console.error('Error retrieving user name:', error);
+    // }
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.closeMenus);
   },
   methods: {
+    uploadProfileImage() {
+    console.log('hello')
+  const fileInput = this.$refs.profileImageInput;
+  const file = fileInput.files[0];
+  if (!file) {
+    console.log('hello')
+    return;
+  }
+  const formData = new FormData();
+  formData.append("profileImage", file);
+
+  axios
+    .put("/auth/update-profile-image", formData, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      console.log('wowwww')
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+},
     logout(e) {
       e.preventDefault();
       axios
@@ -136,6 +171,16 @@ export default {
     },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
+    },
+    closeMenus(event) {
+      const searchBarClickHandle =
+        event.target.classList.contains("search-bar");
+      const profileDropdownClickHandle =
+        event.target.classList.contains("profile-img");
+      if (!searchBarClickHandle && !profileDropdownClickHandle) {
+        this.isMenuOpen = false;
+        this.searchList = [];
+      }
     },
   },
 };
@@ -200,8 +245,8 @@ nav button {
   padding: 8px 16px;
   cursor: pointer;
 }
-.dropdown-menu ul li:hover{
-color: gray;
+.dropdown-menu ul li:hover {
+  color: gray;
 }
 .dropdown-menu > ul > li > .link-login {
   text-decoration: none;
@@ -234,7 +279,7 @@ color: gray;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
- .dropdown-content ul {
+.dropdown-content ul {
   list-style-type: none;
   width: 100%;
 }
@@ -263,6 +308,18 @@ color: gray;
 }
 .dropdown:hover .dropdown-content {
   display: block;
+}
+@media (max-width: 490px) {
+  nav h1 {
+    font-size: 12px;
+    font-weight: bolder;
+  }
+  .search-bar {
+    padding: 10px;
+  }
+  .dropdown {
+    left: -0.8rem;
+  }
 }
 </style>
   

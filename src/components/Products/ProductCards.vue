@@ -1,24 +1,34 @@
 <template>
   <div class="product-container">
     <div class="product-detail">
-      <p class="product-name">{{product.name}}</p>
+      <p class="product-name">{{ product.name }}</p>
       <img :src="product.image" :alt="product.name" />
       <p class="product-price">{{ `Price: ${product.price}` }}</p>
-      <p class="product-description">{{ `Description: ${product.description}` }}</p>
+      <p class="product-description">
+        {{ `Description: ${product.description}` }}
+      </p>
       <div class="shop-button">
         <button class="btn" @click="open">Buy</button>
       </div>
     </div>
-    <div class="pop-Up" v-if="showPopup">
-      <div class="modal">
+    <div class="pop-Up" v-if="showPopup" @click="close">
+      <div class="modal" @click.stop>
         <div class="details">
-          <img :src="product.image" :alt="product.name" style="width: 80px; height: 80px;" />
-          <p>{{product.name}}</p>
-          <p>{{`Price: ${product.price}` }}</p>
-          <p>{{`Description: ${product.description}`}}</p>
-          <div >
-            <button class="btn" @click="buyClick(token)">Add to Cart</button>
-            <button class="btn" @click="close">Close</button>
+          <div class="image-container">
+            <img :src="product.image" :alt="product.name" />
+          </div>
+          <div class="product-info">
+
+            <p class="product-name ">{{ product.name }}</p>
+            <p>{{ `Price: ${product.price}` }}</p>
+            <p>{{ `Description: ${product.description}` }}</p>
+          </div>
+          <div>
+            <div class="button-info">
+              <button class="btn btn-add" @click="buyClick(token)">
+                Add to Cart
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -27,16 +37,16 @@
 </template>
 
 <script>
-import { getTokenFromCookie } from '@/utils/getBrowserCookies.vue';
+import { getTokenFromCookie } from "@/utils/getBrowserCookies.vue";
 export default {
   props: ["product"],
   data() {
     return {
-      token : null,
+      token: null,
       showPopup: false,
     };
   },
-  computed(){
+  computed() {
     this.token = getTokenFromCookie();
   },
   methods: {
@@ -121,8 +131,63 @@ export default {
   background-color: #fff;
   border-radius: 6px;
   padding: 16px;
+  width: 40%;
+  height: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.content {
-  margin-bottom: 16px;
+.details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
+.product-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.product-info p{
+  margin-bottom: 20px;
+}
+.image-container img {
+  width: 85%;
+  height: 85%;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+.product-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.btn-add {
+  position: absolute;
+  top: 16em;
+  right: 4em;
+}
+@media (max-width: 840px) {
+
+  .modal {
+    width: 60%;
+    height: 60%;
+  }
+  .btn-add{
+    top:18em;
+    right: 5em;
+  }
+}
+@media(max-width: 460px){
+.modal{
+  width:50%;
+  height:30%;
+  margin-top: 10px;
+}
+.btn-add{
+  top: 9em;
+  right:3em;
+}
+}
+
 </style>
